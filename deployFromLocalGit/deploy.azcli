@@ -1,0 +1,16 @@
+rg=LocalGit
+plan=ASP-LocalGit-ac54
+webappname=app-localgit
+
+# Create a resource group.
+az group create --location japaneast --name $rg
+
+# Create an App Service plan in STANDARD tier (minimum required by deployment slots).
+az appservice plan create --name $plan --resource-group $rg --sku S1
+
+# Create a Web App
+az webapp create --name $webappname --resource-group $rg --plan $plan --deployment-local-git --location 
+
+az webapp deployment source config-local-git --name $webappname  --resource-group $rg
+
+git remote add azure "https://azureuser0218@app-localgit.scm.azurewebsites.net/app-localgit.git"
